@@ -1,0 +1,1 @@
+// todo creat general concept of the game (canvas id, getcontext, and some functions)
