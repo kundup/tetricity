@@ -19,4 +19,4 @@ function gameloop(){
 
 
 // todo creat general concept of the game (canvas id, getcontext, etc) - done
-// todo create draft for game- first drawing shapes, board and background then updating the shapes and board and countiously drawing them
+// todo create draft for game- first drawing shapes, board and background then updating the shapes and board and countiously drawing them - done
