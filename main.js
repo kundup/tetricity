@@ -44,4 +44,5 @@ gameloop();
 // todo creat general concept of the game (canvas id, getcontext, etc) - done
 // todo create draft for game- first drawing shapes, board and background then updating the shapes and board and countiously drawing them - done
 // completing drawing board with black background - done
-// todo create shapes and draw them pls
+// todo create shapes and draw them pls - L shape drawn
+// todo now automate the drawing of shapes - in this case we need to create a function that will draw the shapes
