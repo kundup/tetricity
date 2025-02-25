@@ -10,7 +10,18 @@ function drawboard(){
     ctx.fillRect(0,0,canvas.width,canvas.height);
 }
 
-function drawshapes() {};
+function drawshapes() {
+    ctx.fillStyle = "red";
+    for (let i = 0; i < shape.L.length; i++) {
+        for (let j = 0; j < shape.L[i].length; j++) {
+            if (shape.L[i][j] == 1) {
+                ctx.fillRect(j * 10, i * 10, 10, 10);
+            }
+        }
+    }
+
+
+};
 
 function drawEveryting(){
     drawboard();
