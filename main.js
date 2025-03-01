@@ -1,10 +1,15 @@
-var canvas = document.getElementById("tetricity");
-var ctx = canvas.getContext("2d");
+
+const canvas = document.getElementById("tetricity");
+const ctx = canvas.getContext("2d");
 const color = {backgroundcolor : "black"};
 const shape = {L : [[1,0],[1,0],[1,1]], J : [[0,1],[0,1],[1,1]],
 I : [[1],[1],[1],[1]], O : [[1,1],[1,1]], S : [[0,1,1],[1,1,0]], Z : [[1,1,0],[0,1,1]], T : [[1,1,1],[0,1,0]]};
 const s = Object.keys(shape);
 let ranshape = s[Math.floor(Math.random() * s.length)];
+const shapelenght = 10;
+const shapeheight = 10;
+let shapeX = canvas.width / 2 - shapelenght
+let shapeY = 0;
 
 function drawboard(){
 
@@ -17,12 +22,15 @@ function drawshapes() {
     for (let i = 0; i < shape[ranshape].length; i++) {
         for (let j = 0; j < shape[ranshape][i].length; j++) {
             if (shape[ranshape][i][j] == 1) {
-                ctx.fillRect(j * 10, i * 10, 10, 10);
+                ctx.fillRect(shapeX + j * shapelenght, shapeY + i * shapeheight, shapelenght, shapeheight);
             }
         }
     }
-
 };
+
+function moveshapes(){
+    shapeY += 1;
+}
 
 
 
@@ -33,6 +41,7 @@ function drawEveryting(){
 
 function gameloop(){
     drawEveryting();
+    moveshapes();
     requestAnimationFrame(gameloop);
 }
 
@@ -47,5 +56,6 @@ gameloop();
 // completing drawing board with black background - done
 // todo create shapes and draw them pls - L shape drawn and the others are drawn
 // todo now automate the drawing of shapes - in this case we need to create a function that will draw the shapes one at a time - done
-
+// lets move the shapes to the center of the board -done
+// lets move the shapes down - done 
 
