@@ -4,8 +4,8 @@ const ctx = canvas.getContext("2d");
 const color = {backgroundcolor : "black"};
 const shape = {L : [[1,0],[1,0],[1,1]], J : [[0,1],[0,1],[1,1]],
 I : [[1],[1],[1],[1]], O : [[1,1],[1,1]], S : [[0,1,1],[1,1,0]], Z : [[1,1,0],[0,1,1]], T : [[1,1,1],[0,1,0]]};
-const s = Object.keys(shape);
-let ranshape = s[Math.floor(Math.random() * s.length)];
+const Keylists = Object.keys(shape);
+let ranshape = Keylists[3];
 const shapelenght = 10;
 const shapeheight = 10;
 let shapeX = canvas.width / 2 - shapelenght
@@ -30,9 +30,12 @@ function drawshapes() {
 
 function moveshapes(){
     shapeY += 1;
+    if (shapeY > canvas.height){
+        shapeY = 0;
+        ranshape = Keylists[Math.floor(Math.random() * Keylists.length)];       
+        
+    }
 }
-
-
 
 function drawEveryting(){
     drawboard();
@@ -58,4 +61,7 @@ gameloop();
 // todo now automate the drawing of shapes - in this case we need to create a function that will draw the shapes one at a time - done
 // lets move the shapes to the center of the board -done
 // lets move the shapes down - done 
+// now boundary check for the shapes -done
+// now after boundry checked from height, let the new type shapes drop -done
+// lets make the shapes move left and right
 
