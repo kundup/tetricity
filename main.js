@@ -63,6 +63,7 @@ gameloop();
 // now boundary check for the shapes -done
 // now after boundry checked from height, let the new type shapes drop -done
 // lets make the shapes move left and right
+// after keydown event, now going through game mechanics keep the shapes in board and go on new shapes.
 
 
 
