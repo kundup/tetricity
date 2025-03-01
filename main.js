@@ -1,7 +1,7 @@
 
 const canvas = document.getElementById("tetricity");
 const ctx = canvas.getContext("2d");
-const color = {backgroundcolor : "black"};
+const color = {backgroundcolor : "black", shapecolor : "yellow"};
 const shape = {L : [[1,0],[1,0],[1,1]], J : [[0,1],[0,1],[1,1]],
 I : [[1],[1],[1],[1]], O : [[1,1],[1,1]], S : [[0,1,1],[1,1,0]], Z : [[1,1,0],[0,1,1]], T : [[1,1,1],[0,1,0]]};
 const Keylists = Object.keys(shape);
@@ -18,7 +18,7 @@ function drawboard(){
 }
 
 function drawshapes() {
-    ctx.fillStyle = "red";    
+    ctx.fillStyle = color.shapecolor;    
     for (let i = 0; i < shape[ranshape].length; i++) {
         for (let j = 0; j < shape[ranshape][i].length; j++) {
             if (shape[ranshape][i][j] == 1) {
@@ -32,8 +32,7 @@ function moveshapes(){
     shapeY += 1;
     if (shapeY > canvas.height){
         shapeY = 0;
-        ranshape = Keylists[Math.floor(Math.random() * Keylists.length)];       
-        
+        ranshape = Keylists[Math.floor(Math.random() * Keylists.length)];
     }
 }
 
@@ -64,4 +63,11 @@ gameloop();
 // now boundary check for the shapes -done
 // now after boundry checked from height, let the new type shapes drop -done
 // lets make the shapes move left and right
+
+
+
+
+
+// for the long term improvement add visual affects
+// for the long term improvement add possibility
 
