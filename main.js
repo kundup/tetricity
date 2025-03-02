@@ -3,7 +3,7 @@ const canvas = document.getElementById("tetricity");
 const ctx = canvas.getContext("2d");
 const color = {backgroundcolor : "black", shapecolor : "yellow"};
 const shape = {L : [[1,0],[1,0],[1,1]], J : [[0,1],[0,1],[1,1]],
-I : [[1],[1],[1],[1]], O : [[1,1],[1,1]], S : [[0,1,1],[1,1,0]], Z : [[1,1,0],[0,1,1]], T : [[1,1,1],[0,1,0]]};
+I : [[1],[1],[1],[1]], O : [[1,1],[1,1]], S : [[0,1,1],[1,1,0]], Z : [[1,1,0],[0,1,1]], T : [[1,1,1],[0,1,0]], TT : [[0,1,0],[1,1,1]]};
 const Keylists = Object.keys(shape);
 let ranshape = Keylists[3];
 const tilelenght = 10;
