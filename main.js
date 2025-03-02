@@ -33,8 +33,18 @@ function moveshapes(){
     if (shapeY > canvas.height){
         shapeY = 0;
         ranshape = Keylists[Math.floor(Math.random() * Keylists.length)];
-    }
+        shapeX = canvas.width / 2 - shapelenght
+    }   
+
 }
+
+document.addEventListener("keydown", function(event){
+    if (event.key === "ArrowLeft"){
+        shapeX -= 10;
+    } else if (event.key === "ArrowRight"){
+        shapeX += 15;
+    }
+});
 
 function drawEveryting(){
     drawboard();
@@ -62,7 +72,8 @@ gameloop();
 // lets move the shapes down - done 
 // now boundary check for the shapes -done
 // now after boundry checked from height, let the new type shapes drop -done
-// lets make the shapes move left and right
+// lets make the shapes move left and right - done
+// todo add boundaries
 // after keydown event, now going through game mechanics keep the shapes in board and go on new shapes.
 
 
