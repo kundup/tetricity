@@ -6,9 +6,9 @@ const shape = {L : [[1,0],[1,0],[1,1]], J : [[0,1],[0,1],[1,1]],
 I : [[1],[1],[1],[1]], O : [[1,1],[1,1]], S : [[0,1,1],[1,1,0]], Z : [[1,1,0],[0,1,1]], T : [[1,1,1],[0,1,0]]};
 const Keylists = Object.keys(shape);
 let ranshape = Keylists[3];
-const shapelenght = 10;
-const shapeheight = 10;
-let shapeX = canvas.width / 2 - shapelenght
+const tilelenght = 10;
+const tileheight = 10;
+let shapeX = canvas.width / 2 - tilelenght
 let shapeY = 0;
 
 function drawboard(){
@@ -22,7 +22,7 @@ function drawshapes() {
     for (let i = 0; i < shape[ranshape].length; i++) {
         for (let j = 0; j < shape[ranshape][i].length; j++) {
             if (shape[ranshape][i][j] == 1) {
-                ctx.fillRect(shapeX + j * shapelenght, shapeY + i * shapeheight, shapelenght, shapeheight);
+                ctx.fillRect(shapeX + j * tilelenght, shapeY + i * tileheight, tilelenght, tileheight);
             }
         }
     }
@@ -33,9 +33,8 @@ function moveshapes(){
     if (shapeY > canvas.height){
         shapeY = 0;
         ranshape = Keylists[Math.floor(Math.random() * Keylists.length)];
-        shapeX = canvas.width / 2 - shapelenght
-    }   
-
+        shapeX = canvas.width / 2 - tilelenght
+    } 
 }
 
 document.addEventListener("keydown", function(event){
@@ -46,9 +45,9 @@ document.addEventListener("keydown", function(event){
         }
     } else if (event.key === "ArrowRight"){
         shapeX += 15;
-        let shapeWidth = shape[ranshape][0]. length * shapelenght   
+        let shapeWidth = shape[ranshape][0]. length * tilelenght   
         if (shapeX + shapeWidth > canvas.width - shapeWidth) {  
-            shapeX = canvas.width - shapeWidth;  // Sınırı aşmaması sağlandı
+            shapeX = canvas.width - shapeWidth;
         }       
     }
 });
