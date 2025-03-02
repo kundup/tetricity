@@ -8,8 +8,11 @@ const Keylists = Object.keys(shape);
 let ranshape = Keylists[3];
 const tilelenght = 10;
 const tileheight = 10;
+const shapeDown = 10;
 let shapeX = canvas.width / 2 - tilelenght
 let shapeY = 0;
+
+
 
 function drawboard(){
 
@@ -49,6 +52,8 @@ document.addEventListener("keydown", function(event){
         if (shapeX + shapeWidth > canvas.width - shapeWidth) {  
             shapeX = canvas.width - shapeWidth;
         }       
+    } else if (event.key === "ArrowDown"){
+        shapeY += 40;        
     }
 });
 
@@ -80,6 +85,7 @@ gameloop();
 // now after boundry checked from height, let the new type shapes drop -done
 // lets make the shapes move left and right - done
 // todo add boundaries -done 
+// droppping the shapes by arrowdown - done
 // after keydown event, now going through game mechanics keep the shapes in board and go on new shapes.
 
 
