@@ -5,7 +5,7 @@ const ctx = canvas.getContext("2d");
 const row = 30;
 const col = 30;
 const grid = new Array(row).fill().map(()=> new Array(col). fill(0)); // ** new js feature used to draw grid
-const color = {backgroundcolor : "blue", shapecolor : "yellow"};
+const color = {backgroundcolor : "black", shapecolor : "yellow"};
 const shape = {L : [[1,0],[1,0],[1,1]], J : [[0,1],[0,1],[1,1]],
 I : [[1],[1],[1],[1]], O : [[1,1],[1,1]], S : [[0,1,1],[1,1,0]], Z : [[1,1,0],[0,1,1]], T : [[1,1,1],[0,1,0]], TT : [[0,1,0],[1,1,1]]};
 const Keylists = Object.keys(shape);
@@ -57,8 +57,8 @@ function Placetheshape (x, y){
 
 function moveshapes(){
     shapeY += 1;
-    if (shapeY > canvas.height- 20){
-        Placetheshape(20, 20)
+    if (shapeY>= canvas.height- shape[ranshape].length * tileheight){
+        Placetheshape(shapeX/tilelenght, shapeY/tileheight)
         shapeY = 0;
         ranshape = Keylists[Math.floor(Math.random() * Keylists.length)];
         shapeX = canvas.width / 2 - tilelenght;
@@ -79,7 +79,8 @@ document.addEventListener("keydown", function(event){
             shapeX = canvas.width - shapeWidth;
         }       
     } else if (event.key === "ArrowDown"){
-        shapeY += shapeDown;        
+        shapeY += shapeDown; 
+                
     }
 });
 
@@ -113,7 +114,13 @@ gameloop();
 // todo add boundaries -done 
 // droppping the shapes by arrowdown - done
 // grid drawn as tile map.
-// after keydown event, now going through game mechanics keep the shapes in board and go on new shapes.
+// after keydown event, now going through game mechanics keep the shapes in board and go on new shapes - done.
+// lets play around the former todo, place the shape somewhere around bottom side.. - done
+// lets try to code the collison detection.
+// lets gain some points and break the shape
+// points mechanism
+ 
+
 // for the long term improvement add visual affects
 // for the long term improvement add possibility
 
