@@ -44,12 +44,24 @@ function drawshapes() {
     }
 };
 
+function Placetheshape (x, y){
+
+    for (let i = 0; i < shape[ranshape].length ; i++){
+        for (let j = 0; j < shape[ranshape][i].length; j++){
+            if (shape[ranshape][i][j] == 1){
+                grid[y + i][x + j] = 1
+            }
+        }
+    }
+}
+
 function moveshapes(){
     shapeY += 1;
     if (shapeY > canvas.height- 20){
+        Placetheshape(20, 20)
         shapeY = 0;
         ranshape = Keylists[Math.floor(Math.random() * Keylists.length)];
-        shapeX = canvas.width / 2 - tilelenght
+        shapeX = canvas.width / 2 - tilelenght;
         
     } 
 }
