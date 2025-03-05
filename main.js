@@ -4,8 +4,9 @@ const ctx = canvas.getContext("2d");
 
 const row = 30;
 const col = 30;
+const framegap = 1;
 const grid = new Array(row).fill().map(()=> new Array(col). fill(0)); // ** new js feature used to draw grid
-const color = {backgroundcolor : "black", shapecolor : "yellow"};
+const color = {backgroundcolor : "black", shapecolor : "yellow", frame : "black"};
 const shape = {L : [[1,0],[1,0],[1,1]], J : [[0,1],[0,1],[1,1]],
 I : [[1],[1],[1],[1]], O : [[1,1],[1,1]], S : [[0,1,1],[1,1,0]], Z : [[1,1,0],[0,1,1]], T : [[1,1,1],[0,1,0]], TT : [[0,1,0],[1,1,1]]};
 const Keylists = Object.keys(shape);
@@ -19,6 +20,7 @@ let shapeY = 0;
 
 
 function drawboard(){
+
     ctx.fillStyle = color.backgroundcolor;
     ctx.fillRect(0,0,canvas.width,canvas.height);
 
@@ -27,6 +29,10 @@ function drawboard(){
             if (grid [i][j] === 1) {
                 ctx.fillStyle = color.shapecolor;
                 ctx.fillRect (j * tilelenght, i * tileheight, tilelenght, tileheight)
+
+                ctx.strokeStyle = color.frame; // Siyah çerçeve
+                ctx.lineWidth = framegap;
+                ctx.strokeRect(j * tilelenght, i * tileheight, tilelenght, tileheight);
             }
         }        
 
@@ -34,15 +40,24 @@ function drawboard(){
 }
 
 function drawshapes() {    
-    ctx.fillStyle = color.shapecolor;   
+       
     for (let i = 0; i < shape[ranshape].length; i++) {
         for (let j = 0; j < shape[ranshape][i].length; j++) {
-            if (shape[ranshape][i][j] == 1) {
+            if (shape[ranshape][i][j] == 1) { 
+                ctx.fillStyle = color.shapecolor;               
                 ctx.fillRect(shapeX + j * tilelenght, shapeY + i * tileheight, tilelenght, tileheight);
+                
+                ctx.strokeStyle = color.frame;
+                ctx.lineWidth = framegap;
+                ctx.strokeRect(shapeX + j * tilelenght, shapeY + i * tileheight, tilelenght, tileheight);
             }
         }
     }
 };
+
+function collisonDetection () {
+
+} 
 
 function Placetheshape (x, y){
 
