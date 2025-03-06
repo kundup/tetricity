@@ -53,9 +53,20 @@ function drawshapes() {
 };
 
 function collisondetection (){
-
+    
+    for (let i = 0; i < shape[ranshape].length; i++) {
+        for (let j = 0; j < shape[ranshape][i].length; j++){
+            if (shape[ranshape][i][j] === 1){
+                let newY = (shapeY / tilesize) + i + 1;
+                let newX = (shapeX / tilesize) + j;
+                if (newY >= row || grid[Math.floor(newY)][Math.floor(newX)] === 1){
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
 }
-
 
 function Placetheshape (x, y){
 
@@ -69,14 +80,14 @@ function Placetheshape (x, y){
 }
 
 function moveshapes(){
-    shapeY += velshapeY;
-    if (shapeY >= canvas.height- shape[ranshape].length * tilesize){
-        Placetheshape(shapeX/tilesize, shapeY/tilesize)
+    if (!collisondetection()){
+        shapeY += velshapeY;
+    } else {
+        Placetheshape(Math.floor(shapeX / tilesize), Math.floor(shapeY / tilesize));
         shapeY = 0;
         ranshape = Keylists[Math.floor(Math.random() * Keylists.length)];
-        shapeX = canvas.width / 2 - tilesize;
-        
-    } 
+        shapeX = Math.floor(canvas.width / 2 - tilesize);
+    }
 }
 
 document.addEventListener("keydown", function(event){
