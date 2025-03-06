@@ -53,7 +53,7 @@ function drawshapes() {
 };
 
 function collisondetection (){
-    
+
     for (let i = 0; i < shape[ranshape].length; i++) {
         for (let j = 0; j < shape[ranshape][i].length; j++){
             if (shape[ranshape][i][j] === 1){
@@ -99,7 +99,7 @@ document.addEventListener("keydown", function(event){
     } else if (event.key === "ArrowRight"){
         shapeX += 15;
         let shapeWidth = shape[ranshape][0]. length * tilesize   
-        if (shapeX + shapeWidth > canvas.width - shapeWidth) {  
+        if (shapeX + shapeWidth >= canvas.width) {  
             shapeX = canvas.width - shapeWidth;
         }       
     } else if (event.key === "ArrowDown"){
