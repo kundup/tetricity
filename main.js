@@ -37,6 +37,7 @@ TT : "#FE9900"};
 
 let shapeX = canvas.width / 2 - tilesize;
 let shapeY = 0;
+let gamescore = 0;
 
 
 function drawboard(){
@@ -54,8 +55,7 @@ function drawboard(){
                 ctx.lineWidth = framegap;
                 ctx.strokeRect(j * tilesize, i * tilesize, tilesize, tilesize);
             }
-        }        
-
+        } 
     }
 }
 
@@ -103,6 +103,7 @@ function Placetheshape (x, y){
 }
 
 function moveshapes(){
+
     if (!collisondetection()){
         shapeY += velshapeY;
     } else {
@@ -126,7 +127,6 @@ document.addEventListener("keydown", function(event){
             shapeX = canvas.width - shapeWidth;
         }       
     } else if (event.key === "ArrowDown"){
-
         shapeY += tilesize * 1.5;
     }   
 });
@@ -173,6 +173,8 @@ gameloop();
 // for the long term improvement add possibility
 // for the long term improvment add next shape visuals
 // publish the game
+
+// issue : when arrowdown to the end, game loop paused and shape out of board
 
 
 // ** represents : new js function usage
