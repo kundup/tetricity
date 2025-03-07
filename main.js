@@ -7,12 +7,35 @@ const row = 30;
 const col = 30;
 const framegap = 1;
 const grid = new Array(row).fill().map(()=> new Array(col). fill(0)); // ** new js feature used to draw grid
-const color = {backgroundcolor : "black", shapecolor : "yellow", frame : "black"};
-const shape = {L : [[1,0],[1,0],[1,1]], J : [[0,1],[0,1],[1,1]],
-I : [[1],[1],[1],[1]], O : [[1,1],[1,1]], S : [[0,1,1],[1,1,0]], Z : [[1,1,0],[0,1,1]], T : [[1,1,1],[0,1,0]], TT : [[0,1,0],[1,1,1]]};
+const shape = {
+L : [[1,0],[1,0],[1,1]],
+F : [[1,1],[1,0],[1,0]],
+J : [[0,1],[0,1],[1,1]],
+I : [[1],[1],[1],[1]],
+O : [[1,1],[1,1]], 
+S : [[0,1,1],[1,1,0]], 
+Z : [[1,1,0],[0,1,1]], 
+T : [[1,1,1],[0,1,0]], 
+TT : [[0,1,0],[1,1,1]],
+
+};
 const Keylists = Object.keys(shape);
 let ranshape = Keylists.at(-1); // ** last element in the array
-let shapeX = canvas.width / 2 - tilesize
+
+const color = {
+backgroundcolor : "black",
+frame : "black",
+L : "#E5ACF6",
+F : "#83BAFF",
+J :"#F0797A",
+I : "#DFC57B",
+S : "#9269F3",
+Z : "#53D31F",
+O :"#CFD5DB",
+T : "#98F5F9",
+TT : "#FE9900"};
+
+let shapeX = canvas.width / 2 - tilesize;
 let shapeY = 0;
 
 
@@ -23,9 +46,9 @@ function drawboard(){
 
     for (let i = 0; i < row; i++){
         for (let j = 0; j < col; j++){
-            if (grid [i][j] === 1) {
-                ctx.fillStyle = color.shapecolor;
-                ctx.fillRect (j * tilesize, i * tilesize, tilesize, tilesize)
+            if (grid [i][j] !== 0) {
+                ctx.fillStyle = grid[i][j];
+                ctx.fillRect(j * tilesize, i * tilesize, tilesize, tilesize)
 
                 ctx.strokeStyle = color.frame;
                 ctx.lineWidth = framegap;
@@ -41,7 +64,7 @@ function drawshapes() {
     for (let i = 0; i < shape[ranshape].length; i++) {
         for (let j = 0; j < shape[ranshape][i].length; j++) {
             if (shape[ranshape][i][j] == 1) { 
-                ctx.fillStyle = color.shapecolor;               
+                ctx.fillStyle = color[ranshape]             
                 ctx.fillRect(shapeX + j * tilesize, shapeY + i * tilesize, tilesize, tilesize);
                 
                 ctx.strokeStyle = color.frame;
@@ -59,7 +82,7 @@ function collisondetection (){
             if (shape[ranshape][i][j] === 1){
                 let newY = (shapeY / tilesize) + i + 1;
                 let newX = (shapeX / tilesize) + j;
-                if (newY >= row || grid[Math.floor(newY)][Math.floor(newX)] === 1){
+                if (newY >= row || grid[Math.floor(newY)][Math.floor(newX)] !== 0){
                     return true;
                 }
             }
@@ -73,7 +96,7 @@ function Placetheshape (x, y){
     for (let i = 0; i < shape[ranshape].length ; i++){
         for (let j = 0; j < shape[ranshape][i].length; j++){
             if (shape[ranshape][i][j] == 1){
-                grid[y + i][x + j] = 1
+                grid[y + i][x + j] = color[ranshape]
             }
         }
     }
@@ -140,7 +163,8 @@ gameloop();
 // grid drawn as tile map.
 // after keydown event, now going through game mechanics keep the shapes in board and go on new shapes - done.
 // lets play around the former todo, place the shape somewhere around bottom side.. - done
-// lets try to code the collison detection.
+// lets try to code the collison detection.- done
+// color the shapes
 // lets gain some points and break the shape
 // points mechanism
  
