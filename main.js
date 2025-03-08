@@ -1,6 +1,7 @@
 
 const canvas = document.getElementById("tetricity");
 const ctx = canvas.getContext("2d");
+let gameover = false;
 const tilesize = 15;
 const velshapeY = tilesize * 0.1;
 const row = 30;
@@ -43,37 +44,47 @@ let gamescore = 0;
 function drawboard(){
 
     ctx.fillStyle = color.backgroundcolor;
-
     ctx.fillRect(0,0,canvas.width,canvas.height);
 
-    for (let i = 0; i < row; i++){
-        for (let j = 0; j < col; j++){
-            if (grid [i][j] !== 0) {
-                ctx.fillStyle = grid[i][j];
-                ctx.fillRect(j * tilesize, i * tilesize, tilesize, tilesize)
+    if (gameover){
+        ctx.fillStyle = "white";
+        ctx.font = "20px Arial";
+        ctx.textalign = "center";
+        ctx.fillText ("Game Over", canvas.width * 0.35, canvas.height/2);
+    } else {
 
-                ctx.strokeStyle = color.frame;
-                ctx.lineWidth = framegap;
-                ctx.strokeRect(j * tilesize, i * tilesize, tilesize, tilesize);
-            }
-        } 
-    }
+        for (let i = 0; i < row; i++){
+            for (let j = 0; j < col; j++){
+                if (grid [i][j] !== 0) {
+                    ctx.fillStyle = grid[i][j];
+                    ctx.fillRect(j * tilesize, i * tilesize, tilesize, tilesize)
+    
+                    ctx.strokeStyle = color.frame;
+                    ctx.lineWidth = framegap;
+                    ctx.strokeRect(j * tilesize, i * tilesize, tilesize, tilesize);
+                }
+            } 
+        }
+    }    
 }
 
-function drawshapes() {    
+function drawshapes() {        
        
-    for (let i = 0; i < shape[ranshape].length; i++) {
-        for (let j = 0; j < shape[ranshape][i].length; j++) {
-            if (shape[ranshape][i][j] == 1) { 
-                ctx.fillStyle = color[ranshape]             
-                ctx.fillRect(shapeX + j * tilesize, shapeY + i * tilesize, tilesize, tilesize);
-                
-                ctx.strokeStyle = color.frame;
-                ctx.lineWidth = framegap;
-                ctx.strokeRect(shapeX + j * tilesize, shapeY + i * tilesize, tilesize, tilesize);
+    if (!gameover) {
+
+        for (let i = 0; i < shape[ranshape].length; i++) {
+            for (let j = 0; j < shape[ranshape][i].length; j++) {
+                if (shape[ranshape][i][j] == 1) { 
+                    ctx.fillStyle = color[ranshape]             
+                    ctx.fillRect(shapeX + j * tilesize, shapeY + i * tilesize, tilesize, tilesize);
+                    
+                    ctx.strokeStyle = color.frame;
+                    ctx.lineWidth = framegap;
+                    ctx.strokeRect(shapeX + j * tilesize, shapeY + i * tilesize, tilesize, tilesize);
+                }
             }
         }
-    }
+    }    
 };
 
 function collisondetection (){
@@ -85,7 +96,7 @@ function collisondetection (){
                 let newX = (shapeX / tilesize) + j;
                 if (newY >= row || grid[Math.floor(newY)][Math.floor(newX)] !== 0){
                     return true;
-                }
+                }                
             }
         }
     }
@@ -97,8 +108,8 @@ function Placetheshape (x, y){
     for (let i = 0; i < shape[ranshape].length ; i++){
         for (let j = 0; j < shape[ranshape][i].length; j++){
             if (shape[ranshape][i][j] == 1){
-                grid[y + i][x + j] = color[ranshape]                
-            }
+                grid[y + i][x + j] = color[ranshape];
+            } 
         }
     }
 
@@ -119,7 +130,11 @@ function clearFullRows() {
 function moveshapes(){
 
     if (!collisondetection()){
-        shapeY += velshapeY;
+        shapeY += velshapeY;                    
+           
+    } else if ( shapeY <= 50) {
+        gameover = true        
+
     } else {
         Placetheshape(Math.floor(shapeX / tilesize), Math.floor(shapeY / tilesize));
         shapeY = 0;
@@ -180,7 +195,9 @@ gameloop();
 // lets try to code the collison detection.- done
 // color the shapes - done
 // lets gain some points and break the shape -done
+// end the game
 // points mechanism
+// next shape visuals
  
 
 // for the long term improvement add visual affects and organise the game frame
