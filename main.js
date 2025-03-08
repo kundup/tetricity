@@ -199,6 +199,8 @@ gameloop();
 // "n" shape will be added
 // points mechanism
 // next shape visuals
+// game entry screen and choose levels
+// visual effects on "gameover"
  
 
 // for the long term improvement add visual affects and organise the game frame
