@@ -14,11 +14,12 @@ F : [[1,1],[1,0],[1,0]],
 J : [[0,1],[0,1],[1,1]],
 I : [[1],[1],[1],[1]],
 O : [[1,1],[1,1]], 
-S : [[0,1,1],[1,1,0]], 
+S : [[0,1,1],[1,1,0]],
+N : [[0,1],[1,1],[1,0]], 
 Z : [[1,1,0],[0,1,1]], 
 T : [[1,1,1],[0,1,0]], 
+TN : [[1,0],[1,1],[0,1]],
 TT : [[0,1,0],[1,1,1]],
-
 };
 const Keylists = Object.keys(shape);
 let ranshape = Keylists.at(-1); // ** last element in the array
@@ -31,10 +32,13 @@ F : "#83BAFF",
 J :"#F0797A",
 I : "#DFC57B",
 S : "#9269F3",
+N : "#CCE608",
 Z : "#53D31F",
 O :"#CFD5DB",
 T : "#98F5F9",
-TT : "#FE9900"};
+TN : "#FFFFFF",
+TT : "#FE9900",
+};
 
 let shapeX = canvas.width / 2 - tilesize;
 let shapeY = 0;
@@ -48,9 +52,9 @@ function drawboard(){
 
     if (gameover){
         ctx.fillStyle = "white";
-        ctx.font = "20px Arial";
+        ctx.font = "24px 'Courier New', monospace";
         ctx.textalign = "center";
-        ctx.fillText ("Game Over", canvas.width * 0.35, canvas.height/2);
+        ctx.fillText ("Game Over", canvas.width * 0.30, canvas.height/2);
     } else {
 
         for (let i = 0; i < row; i++){
@@ -197,10 +201,12 @@ gameloop();
 // lets gain some points and break the shape -done
 // end the game -done
 // "n" shape will be added
+// write the code again with for loop at clearfullrows function
 // points mechanism
 // next shape visuals
 // game entry screen and choose levels
 // visual effects on "gameover"
+
  
 
 // for the long term improvement add visual affects and organise the game frame
