@@ -1,11 +1,13 @@
 
 const canvas = document.getElementById("tetricity");
 const ctx = canvas.getContext("2d");
+
 let gameover = false;
 const tilesize = 15;
 const velshapeY = tilesize * 0.1;
 const row = 30;
 const col = 20;
+const gameboundary = col * tilesize
 const framegap = 1;
 const grid = new Array(row).fill().map(()=> new Array(col). fill(0)); // ** new js feature used to draw grid
 const shape = {
@@ -27,6 +29,7 @@ let ranshape = Keylists.at(-1); // ** last element in the array
 const color = {
 backgroundcolor : "black",
 frame : "black",
+fontendcolor : "white",
 L : "#E5ACF6",
 F : "#83BAFF",
 J :"#F0797A",
@@ -40,23 +43,25 @@ TN : "#FFFFFF",
 TT : "#FE9900",
 };
 
-let shapeX = canvas.width / 2 - tilesize;
+let shapeX = gameboundary / 2 - tilesize;
 let shapeY = 0;
 let gamescore = 0;
 
 
 function drawboard(){
+    
 
     ctx.fillStyle = color.backgroundcolor;
-    ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.fillRect(0, 0, canvas.width, canvas.height);    
 
     if (gameover){
-        ctx.fillStyle = "white";
-        ctx.font = "24px 'Courier New', monospace";
+        ctx.fillStyle = color.fontendcolor;
+        ctx.font = "22px 'Courier New', monospace";
         ctx.textalign = "center";
-        ctx.fillText ("Game Over", canvas.width * 0.30, canvas.height/2);
-    } else {
+        ctx.fillText ("Game Over", gameboundary * 0.30, canvas.height/2);
 
+    } else {
+        
         for (let i = 0; i < row; i++){
             for (let j = 0; j < col; j++){
                 if (grid [i][j] !== 0) {
@@ -158,7 +163,7 @@ function moveshapes(){
         Placetheshape(Math.floor(shapeX / tilesize), Math.floor(shapeY / tilesize));
         shapeY = 0;
         ranshape = Keylists[Math.floor(Math.random() * Keylists.length)];
-        shapeX = Math.floor(canvas.width / 2 - tilesize);
+        shapeX = Math.floor(gameboundary / 2 - tilesize);
     }
 }
 
@@ -171,8 +176,8 @@ document.addEventListener("keydown", function(event){
     } else if (event.key === "ArrowRight"){
         shapeX += 15;
         let shapeWidth = shape[ranshape][0]. length * tilesize   
-        if (shapeX + shapeWidth >= canvas.width) {  
-            shapeX = canvas.width - shapeWidth;
+        if (shapeX + shapeWidth >= gameboundary) {  
+            shapeX = gameboundary - shapeWidth;
         }       
     } else if (event.key === "ArrowDown"){
         shapeY += tilesize * 1.5;
@@ -217,7 +222,7 @@ gameloop();
 // end the game -done
 // "n" shape will be added -done
 // write the code again with for loop at clearfullrows function -done
-// points mechanism
+// points mechanism shown on the board -now canvas width reshaped with extraspace in progress
 // next shape visuals
 // game entry screen and choose levels
 // visual effects on "gameover"
