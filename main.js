@@ -195,7 +195,8 @@ gameloop();
 // lets try to code the collison detection.- done
 // color the shapes - done
 // lets gain some points and break the shape -done
-// end the game
+// end the game -done
+// "n" shape will be added
 // points mechanism
 // next shape visuals
  
