@@ -117,17 +117,32 @@ function Placetheshape (x, y){
         }
     }
 
-    clearFullRows()
+    clearFullRows();
 }
 
 function clearFullRows() {
-    for (let i = row - 1; i >= 0; i--) { 
-        if (grid[i].every(cell => cell !== 0)) {  
+
+    for (let i = row - 1; i >= 0; i--) {
+        let rowfull = true;
+
+        for (let j = 0; j < col; j++) {
+            if (grid[i][j] === 0){
+                rowfull = false;
+                break
+            } 
+        }
+        if (rowfull){
             grid.splice(i, 1);  
             grid.unshift(new Array(col).fill(0));  
             gamescore += 10;  
-            i++;  
-        }
+            i++;
+        }        
+        // if (grid[i].every(cell => cell !== 0)) {  
+        //     grid.splice(i, 1);  
+        //     grid.unshift(new Array(col).fill(0));  
+        //     gamescore += 10;  
+        //     i++;  
+        // }
     }
 }
 
@@ -200,8 +215,8 @@ gameloop();
 // color the shapes - done
 // lets gain some points and break the shape -done
 // end the game -done
-// "n" shape will be added
-// write the code again with for loop at clearfullrows function
+// "n" shape will be added -done
+// write the code again with for loop at clearfullrows function -done
 // points mechanism
 // next shape visuals
 // game entry screen and choose levels
@@ -214,7 +229,7 @@ gameloop();
 // for the long term improvment add next shape visuals
 // publish the game
 
-// issue : when arrowdown to the end, game loop paused and shape out of board
+// issue/bug : when arrowdown to the end, game loop paused and shape out of board
 
 
 // ** represents : new js function usage
