@@ -4,7 +4,7 @@ const ctx = canvas.getContext("2d");
 const tilesize = 15;
 const velshapeY = tilesize * 0.1;
 const row = 30;
-const col = 30;
+const col = 20;
 const framegap = 1;
 const grid = new Array(row).fill().map(()=> new Array(col). fill(0)); // ** new js feature used to draw grid
 const shape = {
@@ -43,6 +43,7 @@ let gamescore = 0;
 function drawboard(){
 
     ctx.fillStyle = color.backgroundcolor;
+
     ctx.fillRect(0,0,canvas.width,canvas.height);
 
     for (let i = 0; i < row; i++){
@@ -96,8 +97,21 @@ function Placetheshape (x, y){
     for (let i = 0; i < shape[ranshape].length ; i++){
         for (let j = 0; j < shape[ranshape][i].length; j++){
             if (shape[ranshape][i][j] == 1){
-                grid[y + i][x + j] = color[ranshape]
+                grid[y + i][x + j] = color[ranshape]                
             }
+        }
+    }
+
+    clearFullRows()
+}
+
+function clearFullRows() {
+    for (let i = row - 1; i >= 0; i--) { 
+        if (grid[i].every(cell => cell !== 0)) {  
+            grid.splice(i, 1);  
+            grid.unshift(new Array(col).fill(0));  
+            gamescore += 10;  
+            i++;  
         }
     }
 }
@@ -164,8 +178,8 @@ gameloop();
 // after keydown event, now going through game mechanics keep the shapes in board and go on new shapes - done.
 // lets play around the former todo, place the shape somewhere around bottom side.. - done
 // lets try to code the collison detection.- done
-// color the shapes
-// lets gain some points and break the shape
+// color the shapes - done
+// lets gain some points and break the shape -done
 // points mechanism
  
 
