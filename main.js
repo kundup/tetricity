@@ -48,8 +48,7 @@ let shapeY = 0;
 let gamescore = 0;
 
 
-function drawboard(){
-    
+function drawboard(){    
 
     ctx.fillStyle = color.backgroundcolor;
     ctx.fillRect(0, 0, canvas.width, canvas.height);    
@@ -222,7 +221,7 @@ gameloop();
 // end the game -done
 // "n" shape will be added -done
 // write the code again with for loop at clearfullrows function -done
-// points mechanism shown on the board -now canvas width reshaped with extraspace in progress
+// points mechanism shown on the board -now canvas width reshaped with extraspace; in progress
 // next shape visuals
 // game entry screen and choose levels
 // visual effects on "gameover"
