@@ -260,7 +260,7 @@ gameloop();
 // game entry screen and choose levels
 // visual effects on "gameover"
 
-// issue/bug : when arrowdown to the end, game loop paused and shape out of board!!!! 
+// issue/bug : when arrowdown to the end, game loop paused and shape out of board -resolved by adjusting vertical speed to tilesize 
 
 // for the long term improvement add visual affects and organise the game frame
 // for the long term improvement add possibility
