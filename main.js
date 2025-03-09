@@ -261,6 +261,7 @@ gameloop();
 // visual effects on "gameover"
 
 // issue/bug : when arrowdown to the end, game loop paused and shape out of board -resolved by adjusting vertical speed to tilesize 
+// issue/bug : side collision detection shoyld be added to code.
 
 // for the long term improvement add visual affects and organise the game frame
 // for the long term improvement add possibility
