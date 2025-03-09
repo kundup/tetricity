@@ -4,7 +4,7 @@ const ctx = canvas.getContext("2d");
 
 let gameover = false;
 const tilesize = 15;
-const velshapeY = tilesize * 0.1;
+const velshapeY = 1;
 const row = 30;
 const col = 20;
 const gameboundary = col * tilesize
@@ -24,7 +24,10 @@ TN : [[1,0],[1,1],[0,1]],
 TT : [[0,1,0],[1,1,1]],
 };
 const Keylists = Object.keys(shape);
-let ranshape = Keylists.at(-1); // ** last element in the array
+let ranshape = []
+let ranshape_old = Keylists.at(-1); // ** last element in the array
+let ranshape_new = Keylists[Math.floor(Math.random() * Keylists.length)];
+ranshape.push(ranshape_new, ranshape_old);
 
 const color = {
 backgroundcolor : "black",
@@ -48,10 +51,18 @@ let shapeY = 0;
 let gamescore = 0;
 
 
-function drawboard(){    
+function drawboard(){ 
+    
+    let extraspace = gameboundary + 20;
 
     ctx.fillStyle = color.backgroundcolor;
     ctx.fillRect(0, 0, canvas.width, canvas.height);    
+    
+    //function text
+    ctx.fillStyle = color.fontendcolor;
+    ctx.font = "12px 'Courier New', monospace";
+    ctx.textalign = "center";
+    ctx.fillText ("Game_Score :" + gamescore, extraspace , canvas.height - 50);
 
     if (gameover){
         ctx.fillStyle = color.fontendcolor;
@@ -80,10 +91,10 @@ function drawshapes() {
        
     if (!gameover) {
 
-        for (let i = 0; i < shape[ranshape].length; i++) {
-            for (let j = 0; j < shape[ranshape][i].length; j++) {
-                if (shape[ranshape][i][j] == 1) { 
-                    ctx.fillStyle = color[ranshape]             
+        for (let i = 0; i < shape[ranshape[1]].length; i++) {
+            for (let j = 0; j < shape[ranshape[1]][i].length; j++) {
+                if (shape[ranshape[1]][i][j] == 1) { 
+                    ctx.fillStyle = color[ranshape[1]]             
                     ctx.fillRect(shapeX + j * tilesize, shapeY + i * tilesize, tilesize, tilesize);
                     
                     ctx.strokeStyle = color.frame;
@@ -95,11 +106,30 @@ function drawshapes() {
     }    
 };
 
+function Drawekstraspace (){
+
+    for (let i = 0; i < shape[ranshape[0]].length; i++) {
+        for (let j = 0; j < shape[ranshape[0]][i].length; j++) {
+            if (shape[ranshape[0]][i][j] == 1) { 
+                ctx.fillStyle = color[ranshape[0]]             
+                ctx.fillRect(gameboundary+ 10 + j * tilesize, 40 + i * tilesize  , tilesize, tilesize);
+                
+                ctx.strokeStyle = color.frame;
+                ctx.lineWidth = framegap;
+                ctx.strokeRect(gameboundary + 10 + j * tilesize, 40 + i * tilesize  , tilesize, tilesize);
+            }
+        }
+    }
+
+
+
+}
+
 function collisondetection (){
 
-    for (let i = 0; i < shape[ranshape].length; i++) {
-        for (let j = 0; j < shape[ranshape][i].length; j++){
-            if (shape[ranshape][i][j] === 1){
+    for (let i = 0; i < shape[ranshape[1]].length; i++) {
+        for (let j = 0; j < shape[ranshape[1]][i].length; j++){
+            if (shape[ranshape[1]][i][j] === 1){
                 let newY = (shapeY / tilesize) + i + 1;
                 let newX = (shapeX / tilesize) + j;
                 if (newY >= row || grid[Math.floor(newY)][Math.floor(newX)] !== 0){
@@ -113,10 +143,10 @@ function collisondetection (){
 
 function Placetheshape (x, y){
 
-    for (let i = 0; i < shape[ranshape].length ; i++){
-        for (let j = 0; j < shape[ranshape][i].length; j++){
-            if (shape[ranshape][i][j] == 1){
-                grid[y + i][x + j] = color[ranshape];
+    for (let i = 0; i < shape[ranshape[1]].length ; i++){
+        for (let j = 0; j < shape[ranshape[1]][i].length; j++){
+            if (shape[ranshape[1]][i][j] == 1){
+                grid[y + i][x + j] = color[ranshape[1]];
             } 
         }
     }
@@ -161,7 +191,9 @@ function moveshapes(){
     } else {
         Placetheshape(Math.floor(shapeX / tilesize), Math.floor(shapeY / tilesize));
         shapeY = 0;
-        ranshape = Keylists[Math.floor(Math.random() * Keylists.length)];
+        ranshape.pop()
+        ranshape_new = Keylists[Math.floor(Math.random() * Keylists.length)];
+        ranshape.unshift(ranshape_new)
         shapeX = Math.floor(gameboundary / 2 - tilesize);
     }
 }
@@ -174,18 +206,20 @@ document.addEventListener("keydown", function(event){
         }
     } else if (event.key === "ArrowRight"){
         shapeX += 15;
-        let shapeWidth = shape[ranshape][0]. length * tilesize   
+        let shapeWidth = shape[ranshape[1]][0]. length * tilesize   
         if (shapeX + shapeWidth >= gameboundary) {  
             shapeX = gameboundary - shapeWidth;
         }       
     } else if (event.key === "ArrowDown"){
-        shapeY += tilesize * 1.5;
+        shapeY += 15;
     }   
 });
 
 function drawEveryting(){
     drawboard();
     drawshapes();
+    Drawekstraspace();
+    
 }
 
 function gameloop(){
@@ -221,19 +255,19 @@ gameloop();
 // end the game -done
 // "n" shape will be added -done
 // write the code again with for loop at clearfullrows function -done
-// points mechanism shown on the board -now canvas width reshaped with extraspace; in progress
-// next shape visuals
+// points mechanism shown on the board -now canvas width reshaped with extraspace; still in progress (mechanics done)
+// next shape visuals -done
 // game entry screen and choose levels
 // visual effects on "gameover"
 
- 
+// issue/bug : when arrowdown to the end, game loop paused and shape out of board!!!! 
 
 // for the long term improvement add visual affects and organise the game frame
 // for the long term improvement add possibility
-// for the long term improvment add next shape visuals
 // publish the game
+// magical box
 
-// issue/bug : when arrowdown to the end, game loop paused and shape out of board
+
 
 
 // ** represents : new js function usage
