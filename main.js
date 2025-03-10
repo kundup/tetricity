@@ -81,6 +81,16 @@ function drawboard(){
     }    
 }
 
+function drawLine(x1, y1, x2, y2, color, width) {
+    
+    ctx.beginPath();
+    ctx.moveTo(x1, y1); 
+    ctx.lineTo(x2, y2);  
+    ctx.strokeStyle = color;  
+    ctx.lineWidth = width; 
+    ctx.stroke();  
+}
+
 function dealingText (coloroffont, fontsize, text, locx, locy){
     
     ctx.fillStyle = coloroffont;
@@ -114,6 +124,9 @@ function drawshapes() {
 };
 
 function Drawekstraspace (){
+
+    drawLine(gameboundary, 0, gameboundary, canvas.height, "#34EEF6", 5);
+    drawLine(gameboundary, canvas.height/2, canvas.width, canvas.height / 2, "#34EEF6", 5)
 
     for (let i = 0; i < shape[ranshape[0]].length; i++) {
         for (let j = 0; j < shape[ranshape[0]][i].length; j++) {
