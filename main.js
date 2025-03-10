@@ -7,10 +7,12 @@ const tilesize = 15;
 const velshapeY = 1;
 const row = 30;
 const col = 20;
+const col2 = 10;
 const gameboundary = col * tilesize
 let extraspace = gameboundary + 10;
 const framegap = 1;
 const grid = new Array(row).fill().map(()=> new Array(col). fill(0)); // ** new js feature used to draw grid
+const grid2 = new Array (row).fill().map (()=> new Array (col2).fill(0)); // for extraspace crreating the new grid
 const shape = {
 L : [[1,0],[1,0],[1,1]],
 F : [[1,1],[1,0],[1,0]],
@@ -49,6 +51,12 @@ TT : "#FE9900",
 let shapeX = gameboundary / 2 - tilesize;
 let shapeY = 0;
 let gamescore = 0;
+
+// image file defined
+let brickimage = new Image();
+let tetrisimage = new Image();
+brickimage.src = "wall.png";
+tetrisimage.src = "tetris.png";
 
 function drawboard(){      
 
@@ -104,7 +112,7 @@ function dealingText (coloroffont, fontsize, text, locx, locy){
 
 function drawshapes() {        
        
-    if (!gameover) {
+    
         for (let i = 0; i < shape[ranshape[1]].length; i++) {
             for (let j = 0; j < shape[ranshape[1]][i].length; j++) {
                 if (shape[ranshape[1]][i][j] == 1) { 
@@ -117,13 +125,25 @@ function drawshapes() {
                 }
             }
         }
-    }    
+       
 };
 
 function drawEkstraSpace (){
 
     drawLine(gameboundary, 0, gameboundary, canvas.height, "#34EEF6", 8);
-    drawLine(gameboundary, canvas.height/2, canvas.width, canvas.height / 2, "#34EEF6", 8)
+    //drawLine(gameboundary, canvas.height/2, canvas.width, canvas.height / 2, "#34EEF6", 8)
+    grid2[14].fill(1); // use a grid to place bricks
+    grid2 [0].fill(1);
+    grid2 [grid2.length -3].fill(1);
+    for (let i = 0; i < row; i++){
+        for (let j = 0; j < col2; j++){
+            if (grid2[i][j] === 1) {
+                let x = j * 16 + gameboundary + 4
+                let y = i * 16 
+                ctx.drawImage(tetrisimage, x, y, 16, 16)
+            }
+        }
+    }
 
     for (let i = 0; i < shape[ranshape[0]].length; i++) {
         for (let j = 0; j < shape[ranshape[0]][i].length; j++) {
@@ -236,7 +256,9 @@ document.addEventListener("keydown", function(event){
 
 function drawEveryting(){
     drawboard();
-    drawshapes();
+    if (!gameover){
+        drawshapes();
+    }    
     drawEkstraSpace();
     
 }
