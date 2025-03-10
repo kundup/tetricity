@@ -120,10 +120,10 @@ function drawshapes() {
     }    
 };
 
-function Drawekstraspace (){
+function drawEkstraSpace (){
 
-    drawLine(gameboundary, 0, gameboundary, canvas.height, "#34EEF6", 5);
-    drawLine(gameboundary, canvas.height/2, canvas.width, canvas.height / 2, "#34EEF6", 5)
+    drawLine(gameboundary, 0, gameboundary, canvas.height, "#34EEF6", 8);
+    drawLine(gameboundary, canvas.height/2, canvas.width, canvas.height / 2, "#34EEF6", 8)
 
     for (let i = 0; i < shape[ranshape[0]].length; i++) {
         for (let j = 0; j < shape[ranshape[0]][i].length; j++) {
@@ -237,7 +237,7 @@ document.addEventListener("keydown", function(event){
 function drawEveryting(){
     drawboard();
     drawshapes();
-    Drawekstraspace();
+    drawEkstraSpace();
     
 }
 function gameloop(){
@@ -280,7 +280,7 @@ gameloop();
 // visual effects on "gameover"
 
 // issue/bug : when arrowdown to the end, game loop paused and shape out of board -resolved by adjusting vertical speed to tilesize 
-// issue/bug : side collision detection shoyld be added to code.
+// issue/bug : side collision detection should be added to code.
 
 // for the long term improvement add visual affects and organise the game frame
 // for the long term improvement add possibility
