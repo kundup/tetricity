@@ -51,6 +51,7 @@ TT : "#FE9900",
 let shapeX = gameboundary / 2 - tilesize;
 let shapeY = 0;
 let gamescore = 0;
+let target_score = 40;
 
 // level design
 let gameLevel = 1;
@@ -210,12 +211,14 @@ function clearFullRows() {
             } 
         }
         if (rowfull){
+             
             grid.splice(i, 1);  
             grid.unshift(new Array(col).fill(0));  
             gamescore += 10;
-            if (gamescore >= 10) {
+            if (gamescore >= target_score) {
                 gameLevel += 1;
-                velshapeY *= 1.5;
+                velshapeY *= 1.2;
+                target_score += 40;
             }   
             i++;
         }        
@@ -306,7 +309,7 @@ gameloop();
 // points mechanism shown on the board -now canvas width reshaped with extraspace; still in progress (mechanics done)
 // next shape visuals -done
 // make the code much simplier - in progress
-// game entry screen and choose levels
+// game entry screen and choose levels - in progress
 // visual effects on "gameover"
 
 // issue/bug : when arrowdown to the end, game loop paused and shape out of board -resolved by adjusting vertical speed to tilesize 
