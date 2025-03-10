@@ -36,10 +36,10 @@ backgroundcolor : "black",
 frame : "black",
 fontendcolor : "white",
 L : "#E5ACF6",
-F : "#83BAFF",
+F : "#0DC2FF",
 J :"#F0797A",
-I : "#DFC57B",
-S : "#9269F3",
+I : "#FFE138",
+S : "#F538FF",
 N : "#CCE608",
 Z : "#53D31F",
 O :"#CFD5DB",
@@ -70,7 +70,8 @@ function drawboard(){
     
     //Score texting
     dealingText(color.fontendcolor, 20, "Score: " + gamescore, extraspace, 50);
-    dealingText("red", 16, "Game Level: " + gameLevel, extraspace, 160)
+    dealingText("red", 16, "Game Level: " + gameLevel, extraspace, 160);
+
     if (gameover){
 
         dealingText(color.fontendcolor, 22, "Game Over" , gameboundary * 0.3, canvas.height / 2);
@@ -93,7 +94,7 @@ function drawboard(){
 }
 
 function drawLine(x1, y1, x2, y2, color, width) {
-    
+
     ctx.beginPath();
     ctx.moveTo(x1, y1); 
     ctx.lineTo(x2, y2);  
@@ -102,40 +103,43 @@ function drawLine(x1, y1, x2, y2, color, width) {
     ctx.stroke();  
 }
 
-function dealingText (coloroffont, fontsize, text, locx, locy){
-    
+function dealingText (coloroffont, fontsize, text, locx, locy){  
+       
     ctx.fillStyle = coloroffont;
     ctx.font = `${fontsize}px 'Courier New', monospace`;
     ctx.textalign = "center";
     ctx.fillText (text, locx , locy);
 
     ctx.lineWidth = 2;
-    ctx.strokeStyle = coloroffont;  // Siyah kenarlık
+    ctx.strokeStyle = coloroffont;  
     ctx.strokeText(text, locx, locy);
 }
 
-function drawshapes() {        
-       
+function drawshapes() {          
     
         for (let i = 0; i < shape[ranshape[1]].length; i++) {
             for (let j = 0; j < shape[ranshape[1]][i].length; j++) {
                 if (shape[ranshape[1]][i][j] == 1) { 
+
                     ctx.fillStyle = color[ranshape[1]]             
                     ctx.fillRect(shapeX + j * tilesize, shapeY + i * tilesize, tilesize, tilesize);
+                    
+                    ctx.fillStyle = "rgba(255,255,255,0.9)"; // half- transparent
+                    ctx.fillRect(shapeX + j * tilesize, shapeY + i * tilesize, tilesize, tilesize / 4);
                     
                     ctx.strokeStyle = color.frame;
                     ctx.lineWidth = framegap;
                     ctx.strokeRect(shapeX + j * tilesize, shapeY + i * tilesize, tilesize, tilesize);
                 }
             }
-        }
-       
+        }       
 };
 
 function drawEkstraSpace (){
 
-    drawLine(gameboundary, 0, gameboundary, canvas.height, "#34EEF6", 8);
+    drawLine(gameboundary, 0, gameboundary, canvas.height, "yellow", 8);
     //drawLine(gameboundary, canvas.height/2, canvas.width, canvas.height / 2, "#34EEF6", 8)
+    
     grid2[14].fill(1); // use a grid to place bricks
     grid2 [0].fill(1);
     grid2[5].fill(1);
@@ -152,10 +156,11 @@ function drawEkstraSpace (){
 
     for (let i = 0; i < shape[ranshape[0]].length; i++) {
         for (let j = 0; j < shape[ranshape[0]][i].length; j++) {
-            if (shape[ranshape[0]][i][j] == 1) { 
+            if (shape[ranshape[0]][i][j] == 1) {
+
                 ctx.fillStyle = color[ranshape[0]]             
                 ctx.fillRect(extraspace + 35 + j * tilesize, 330 + i * tilesize  , tilesize, tilesize);
-                
+                                
                 ctx.strokeStyle = color.frame;
                 ctx.lineWidth = framegap;
                 ctx.strokeRect(extraspace + 35 + j * tilesize, 330 + i * tilesize  , tilesize, tilesize);
@@ -249,6 +254,7 @@ function moveshapes(){
 }
 
 document.addEventListener("keydown", function(event){
+
     if (event.key === "ArrowLeft"){
         shapeX -= 15;
         if (shapeX <= 0){
@@ -266,6 +272,7 @@ document.addEventListener("keydown", function(event){
 });
 
 function drawEveryting(){
+
     drawboard();
     if (!gameover){
         drawshapes();
