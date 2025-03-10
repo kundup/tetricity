@@ -25,9 +25,8 @@ TT : [[0,1,0],[1,1,1]],
 };
 const Keylists = Object.keys(shape);
 let ranshape = []
-let ranshape_old = Keylists.at(-1); // ** last element in the array
-let ranshape_new = Keylists[Math.floor(Math.random() * Keylists.length)];
-ranshape.push(ranshape_new, ranshape_old);
+//let ranshape_old = Keylists.at(-1); // ** last element in the array
+ranshape.push(getRandomShape(), getRandomShape());
 
 const color = {
 backgroundcolor : "black",
@@ -120,8 +119,10 @@ function Drawekstraspace (){
             }
         }
     }
+}
 
-
+function getRandomShape (){
+    return Keylists[Math.floor(Math.random() * Keylists.length)];
 
 }
 
@@ -192,8 +193,7 @@ function moveshapes(){
         Placetheshape(Math.floor(shapeX / tilesize), Math.floor(shapeY / tilesize));
         shapeY = 0;
         ranshape.pop()
-        ranshape_new = Keylists[Math.floor(Math.random() * Keylists.length)];
-        ranshape.unshift(ranshape_new)
+        ranshape.unshift(getRandomShape());
         shapeX = Math.floor(gameboundary / 2 - tilesize);
     }
 }
@@ -257,6 +257,7 @@ gameloop();
 // write the code again with for loop at clearfullrows function -done
 // points mechanism shown on the board -now canvas width reshaped with extraspace; still in progress (mechanics done)
 // next shape visuals -done
+// make the code much simplier
 // game entry screen and choose levels
 // visual effects on "gameover"
 
