@@ -4,7 +4,7 @@ const ctx = canvas.getContext("2d");
 
 let gameover = false;
 const tilesize = 15;
-const velshapeY = 1;
+let velshapeY = 1;
 const row = 30;
 const col = 20;
 const col2 = 10;
@@ -52,6 +52,9 @@ let shapeX = gameboundary / 2 - tilesize;
 let shapeY = 0;
 let gamescore = 0;
 
+// level design
+let gameLevel = 1;
+
 // image file defined
 let brickimage = new Image();
 let tetrisimage = new Image();
@@ -65,8 +68,8 @@ function drawboard(){
     ctx.fillRect(0, 0, canvas.width, canvas.height);    
     
     //Score texting
-    dealingText(color.fontendcolor, 20, "Score: " + gamescore, extraspace, 100)
-
+    dealingText(color.fontendcolor, 20, "Score: " + gamescore, extraspace, 50);
+    dealingText("red", 16, "Game Level: " + gameLevel, extraspace, 160)
     if (gameover){
 
         dealingText(color.fontendcolor, 22, "Game Over" , gameboundary * 0.3, canvas.height / 2);
@@ -134,6 +137,7 @@ function drawEkstraSpace (){
     //drawLine(gameboundary, canvas.height/2, canvas.width, canvas.height / 2, "#34EEF6", 8)
     grid2[14].fill(1); // use a grid to place bricks
     grid2 [0].fill(1);
+    grid2[5].fill(1);
     grid2 [grid2.length -3].fill(1);
     for (let i = 0; i < row; i++){
         for (let j = 0; j < col2; j++){
@@ -149,15 +153,15 @@ function drawEkstraSpace (){
         for (let j = 0; j < shape[ranshape[0]][i].length; j++) {
             if (shape[ranshape[0]][i][j] == 1) { 
                 ctx.fillStyle = color[ranshape[0]]             
-                ctx.fillRect(extraspace + 35 + j * tilesize, 325 + i * tilesize  , tilesize, tilesize);
+                ctx.fillRect(extraspace + 35 + j * tilesize, 330 + i * tilesize  , tilesize, tilesize);
                 
                 ctx.strokeStyle = color.frame;
                 ctx.lineWidth = framegap;
-                ctx.strokeRect(extraspace + 35 + j * tilesize, 325 + i * tilesize  , tilesize, tilesize);
+                ctx.strokeRect(extraspace + 35 + j * tilesize, 330 + i * tilesize  , tilesize, tilesize);
             }
         }
     }
-    dealingText(color[ranshape[0]], 18, "Next Shape", extraspace, 275)
+    dealingText(color[ranshape[0]], 18, "Next Shape", extraspace, 280)
 }
 
 function getRandomShape (){
@@ -208,7 +212,11 @@ function clearFullRows() {
         if (rowfull){
             grid.splice(i, 1);  
             grid.unshift(new Array(col).fill(0));  
-            gamescore += 10;  
+            gamescore += 10;
+            if (gamescore >= 10) {
+                gameLevel += 1;
+                velshapeY *= 1.5;
+            }   
             i++;
         }        
         // if (grid[i].every(cell => cell !== 0)) {  
