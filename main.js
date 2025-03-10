@@ -8,6 +8,7 @@ const velshapeY = 1;
 const row = 30;
 const col = 20;
 const gameboundary = col * tilesize
+let extraspace = gameboundary + 10;
 const framegap = 1;
 const grid = new Array(row).fill().map(()=> new Array(col). fill(0)); // ** new js feature used to draw grid
 const shape = {
@@ -50,24 +51,18 @@ let shapeY = 0;
 let gamescore = 0;
 
 
-function drawboard(){ 
-    
-    let extraspace = gameboundary + 20;
+function drawboard(){      
 
+    // whole board; including side area
     ctx.fillStyle = color.backgroundcolor;
     ctx.fillRect(0, 0, canvas.width, canvas.height);    
     
-    //function text
-    ctx.fillStyle = color.fontendcolor;
-    ctx.font = "12px 'Courier New', monospace";
-    ctx.textalign = "center";
-    ctx.fillText ("Game_Score :" + gamescore, extraspace , canvas.height - 50);
+    //Score texting
+    dealingText(color.fontendcolor, 20, "Score: " + gamescore, extraspace, 100)
 
     if (gameover){
-        ctx.fillStyle = color.fontendcolor;
-        ctx.font = "22px 'Courier New', monospace";
-        ctx.textalign = "center";
-        ctx.fillText ("Game Over", gameboundary * 0.30, canvas.height/2);
+
+        dealingText(color.fontendcolor, 22, "Game Over" , gameboundary * 0.3, canvas.height / 2);
 
     } else {
         
@@ -84,6 +79,19 @@ function drawboard(){
             } 
         }
     }    
+}
+
+function dealingText (coloroffont, fontsize, text, locx, locy){
+    
+    ctx.fillStyle = coloroffont;
+    ctx.font = `${fontsize}px 'Courier New', monospace`;
+    ctx.textalign = "center";
+    ctx.fillText (text, locx , locy);
+
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = coloroffont;  // Siyah kenarlık
+    ctx.strokeText(text, locx, locy);
+
 }
 
 function drawshapes() {        
@@ -111,17 +119,20 @@ function Drawekstraspace (){
         for (let j = 0; j < shape[ranshape[0]][i].length; j++) {
             if (shape[ranshape[0]][i][j] == 1) { 
                 ctx.fillStyle = color[ranshape[0]]             
-                ctx.fillRect(gameboundary+ 10 + j * tilesize, 40 + i * tilesize  , tilesize, tilesize);
+                ctx.fillRect(extraspace + 35 + j * tilesize, 325 + i * tilesize  , tilesize, tilesize);
                 
                 ctx.strokeStyle = color.frame;
                 ctx.lineWidth = framegap;
-                ctx.strokeRect(gameboundary + 10 + j * tilesize, 40 + i * tilesize  , tilesize, tilesize);
+                ctx.strokeRect(extraspace + 35 + j * tilesize, 325 + i * tilesize  , tilesize, tilesize);
             }
         }
     }
+
+    dealingText(color[ranshape[0]], 18, "Next Shape", extraspace, 275)
 }
 
 function getRandomShape (){
+
     return Keylists[Math.floor(Math.random() * Keylists.length)];
 
 }
@@ -257,7 +268,7 @@ gameloop();
 // write the code again with for loop at clearfullrows function -done
 // points mechanism shown on the board -now canvas width reshaped with extraspace; still in progress (mechanics done)
 // next shape visuals -done
-// make the code much simplier
+// make the code much simplier - in progress
 // game entry screen and choose levels
 // visual effects on "gameover"
 
