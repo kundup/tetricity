@@ -50,7 +50,6 @@ let shapeX = gameboundary / 2 - tilesize;
 let shapeY = 0;
 let gamescore = 0;
 
-
 function drawboard(){      
 
     // whole board; including side area
@@ -101,13 +100,11 @@ function dealingText (coloroffont, fontsize, text, locx, locy){
     ctx.lineWidth = 2;
     ctx.strokeStyle = coloroffont;  // Siyah kenarlık
     ctx.strokeText(text, locx, locy);
-
 }
 
 function drawshapes() {        
        
     if (!gameover) {
-
         for (let i = 0; i < shape[ranshape[1]].length; i++) {
             for (let j = 0; j < shape[ranshape[1]][i].length; j++) {
                 if (shape[ranshape[1]][i][j] == 1) { 
@@ -140,14 +137,12 @@ function Drawekstraspace (){
             }
         }
     }
-
     dealingText(color[ranshape[0]], 18, "Next Shape", extraspace, 275)
 }
 
 function getRandomShape (){
 
     return Keylists[Math.floor(Math.random() * Keylists.length)];
-
 }
 
 function collisondetection (){
@@ -245,13 +240,12 @@ function drawEveryting(){
     Drawekstraspace();
     
 }
-
 function gameloop(){
+
     drawEveryting();
     moveshapes();
     requestAnimationFrame(gameloop);
 }
-
 gameloop();
 
 
