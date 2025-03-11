@@ -6,7 +6,7 @@ let gameover = false;
 const tilesize = 15;
 let velshapeY = 1;
 const row = 30;
-const col = 20;
+const col = 14;
 const col2 = 10;
 const gameboundary = col * tilesize
 let extraspace = gameboundary + 10;
@@ -48,40 +48,49 @@ TN : "#FFFFFF",
 TT : "#FE9900",
 };
 
-let shapeX = gameboundary / 2 - tilesize;
-let shapeY = 0;
+let shapeX = gameboundary / 2;
+let shapeY = 45;
 let gamescore = 0;
 let target_score = 40;
 
 // level design
 let gameLevel = 1;
 
-// image file defined
-let brickimage = new Image();
-let tetrisimage = new Image();
-brickimage.src = "wall.png";
-tetrisimage.src = "tetris.png";
+// image files
+// let brickimage = new Image();
+// let tetrisimage = new Image();
+let background = new Image();
+background.src = "background.png"
+// brickimage.src = "wall.png";
+// tetrisimage.src = "tetris.png";
 
-function drawboard(){      
 
+function backGround(){
+    ctx.drawImage (background, -5, 0, 300, 488);
+}
+
+function drawboard(){     
+    
     // whole board; including side area
     ctx.fillStyle = color.backgroundcolor;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);    
+    ctx.fillRect(0, 0, canvas.width, canvas.height); 
     
+    backGround();
+
     //Score texting
-    dealingText(color.fontendcolor, 20, "Score: " + gamescore, extraspace, 50);
-    dealingText("red", 16, "Game Level: " + gameLevel, extraspace, 160);
+    dealingText(color.fontendcolor, 15, gamescore, 270, 61);
+    //dealingText("red", 16, "Game Level: " + gameLevel, extraspace, 160);
 
     if (gameover){
 
-        dealingText(color.fontendcolor, 22, "Game Over" , gameboundary * 0.3, canvas.height / 2);
+        dealingText(color.fontendcolor, 22, "Game Over" , gameboundary * 0.20 , canvas.height / 2);
 
     } else {
         
         for (let i = 0; i < row; i++){
             for (let j = 0; j < col; j++){
                 if (grid [i][j] !== 0) {
-                    ctx.fillStyle = grid[i][j];
+                    ctx.fillStyle = grid[i][j].color || "black";
                     ctx.fillRect(j * tilesize, i * tilesize, tilesize, tilesize)
     
                     ctx.strokeStyle = color.frame;
@@ -108,7 +117,7 @@ function dealingText (coloroffont, fontsize, text, locx, locy){
     ctx.fillStyle = coloroffont;
     ctx.font = `${fontsize}px 'Courier New', monospace`;
     ctx.textalign = "center";
-    ctx.fillText (text, locx , locy);
+    ctx.fillText (text, locx , locy);    
 
     ctx.lineWidth = 2;
     ctx.strokeStyle = coloroffont;  
@@ -137,37 +146,37 @@ function drawshapes() {
 
 function drawEkstraSpace (){
 
-    drawLine(gameboundary, 0, gameboundary, canvas.height, "yellow", 8);
+    //drawLine(gameboundary, 0, gameboundary, canvas.height, "yellow", 8);
     //drawLine(gameboundary, canvas.height/2, canvas.width, canvas.height / 2, "#34EEF6", 8)
     
-    grid2[14].fill(1); // use a grid to place bricks
-    grid2 [0].fill(1);
-    grid2[5].fill(1);
-    grid2 [grid2.length -3].fill(1);
-    for (let i = 0; i < row; i++){
-        for (let j = 0; j < col2; j++){
-            if (grid2[i][j] === 1) {
-                let x = j * 16 + gameboundary + 4
-                let y = i * 16 
-                ctx.drawImage(tetrisimage, x, y, 16, 16)
-            }
-        }
-    }
+    // grid2[14].fill(1); // use a grid to place bricks
+    // grid2 [0].fill(1);
+    // grid2[5].fill(1);
+    // grid2 [grid2.length -3].fill(1);
+    // for (let i = 0; i < row; i++){
+    //     for (let j = 0; j < col2; j++){
+    //         if (grid2[i][j] === 1) {
+    //             let x = j * 16 + gameboundary + 4
+    //             let y = i * 16 
+    //             ctx.drawImage(tetrisimage, x, y, 16, 16)
+    //         }
+    //     }
+    // }
 
     for (let i = 0; i < shape[ranshape[0]].length; i++) {
         for (let j = 0; j < shape[ranshape[0]][i].length; j++) {
             if (shape[ranshape[0]][i][j] == 1) {
 
                 ctx.fillStyle = color[ranshape[0]]             
-                ctx.fillRect(extraspace + 35 + j * tilesize, 330 + i * tilesize  , tilesize, tilesize);
+                ctx.fillRect(235 + j * tilesize, 92 + i * tilesize  , tilesize -2, tilesize -2);
                                 
                 ctx.strokeStyle = color.frame;
                 ctx.lineWidth = framegap;
-                ctx.strokeRect(extraspace + 35 + j * tilesize, 330 + i * tilesize  , tilesize, tilesize);
+                ctx.strokeRect(235 + j * tilesize, 92 + i * tilesize  , tilesize, tilesize);
             }
         }
     }
-    dealingText(color[ranshape[0]], 18, "Next Shape", extraspace, 280)
+    //dealingText(color[ranshape[0]], 18, "Next Shape", extraspace, 280)
 }
 
 function getRandomShape (){
@@ -196,11 +205,10 @@ function Placetheshape (x, y){
     for (let i = 0; i < shape[ranshape[1]].length ; i++){
         for (let j = 0; j < shape[ranshape[1]][i].length; j++){
             if (shape[ranshape[1]][i][j] == 1){
-                grid[y + i][x + j] = color[ranshape[1]];
+                grid[y + i][x + j] = {color :color[ranshape[1]], transparent : true}
             } 
         }
     }
-
     clearFullRows();
 }
 
@@ -246,7 +254,7 @@ function moveshapes(){
 
     } else {
         Placetheshape(Math.floor(shapeX / tilesize), Math.floor(shapeY / tilesize));
-        shapeY = 0;
+        shapeY = 45;
         ranshape.pop()
         ranshape.unshift(getRandomShape());
         shapeX = Math.floor(gameboundary / 2 - tilesize);
@@ -271,9 +279,9 @@ document.addEventListener("keydown", function(event){
     }   
 });
 
-function drawEveryting(){
-
-    drawboard();
+function drawEveryting(){   
+    
+    drawboard()
     if (!gameover){
         drawshapes();
     }    
@@ -281,7 +289,7 @@ function drawEveryting(){
     
 }
 function gameloop(){
-
+    
     drawEveryting();
     moveshapes();
     requestAnimationFrame(gameloop);
