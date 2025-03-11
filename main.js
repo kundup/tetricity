@@ -27,9 +27,9 @@ TN : [[1,0],[1,1],[0,1]],
 TT : [[0,1,0],[1,1,1]],
 };
 const Keylists = Object.keys(shape);
-let ranshape = []
+let ranshape = [getRandomShape(), getRandomShape()]
 //let ranshape_old = Keylists.at(-1); // ** last element in the array
-ranshape.push(getRandomShape(), getRandomShape());
+
 
 const color = {
 backgroundcolor : "black",
