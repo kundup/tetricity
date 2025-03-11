@@ -35,7 +35,7 @@ const color = {
 backgroundcolor : "black",
 frame : "black",
 fontendcolor : "white",
-L : "#E5ACF6",
+L : "rgba(229, 172, 246, 1)",
 F : "#0DC2FF",
 J :"#F0797A",
 I : "#FFE138",
@@ -90,9 +90,12 @@ function drawboard(){
         for (let i = 0; i < row; i++){
             for (let j = 0; j < col; j++){
                 if (grid [i][j] !== 0) {
-                    ctx.fillStyle = grid[i][j].color || "black";
+                    ctx.fillStyle = grid[i][j] || "black";
                     ctx.fillRect(j * tilesize, i * tilesize, tilesize, tilesize)
-    
+                    
+                    ctx.fillStyle = "rgba(255,255,255,0.9)";
+                    ctx.fillRect(j * tilesize, i * tilesize, tilesize, tilesize / 4);
+                    
                     ctx.strokeStyle = color.frame;
                     ctx.lineWidth = framegap;
                     ctx.strokeRect(j * tilesize, i * tilesize, tilesize, tilesize);
@@ -162,13 +165,15 @@ function drawEkstraSpace (){
     //         }
     //     }
     // }
-
     for (let i = 0; i < shape[ranshape[0]].length; i++) {
         for (let j = 0; j < shape[ranshape[0]][i].length; j++) {
             if (shape[ranshape[0]][i][j] == 1) {
 
                 ctx.fillStyle = color[ranshape[0]]             
-                ctx.fillRect(235 + j * tilesize, 92 + i * tilesize  , tilesize -2, tilesize -2);
+                ctx.fillRect(235 + j * tilesize, 92 + i * tilesize  , tilesize, tilesize);
+                
+                ctx.fillStyle = "rgba(255,255,255,0.9)";
+                ctx.fillRect(235 + j * tilesize, 92 + i * tilesize  , tilesize, tilesize / 4);
                                 
                 ctx.strokeStyle = color.frame;
                 ctx.lineWidth = framegap;
@@ -205,7 +210,7 @@ function Placetheshape (x, y){
     for (let i = 0; i < shape[ranshape[1]].length ; i++){
         for (let j = 0; j < shape[ranshape[1]][i].length; j++){
             if (shape[ranshape[1]][i][j] == 1){
-                grid[y + i][x + j] = {color :color[ranshape[1]], transparent : true}
+                grid[y + i][x + j] = color[ranshape[1]]
             } 
         }
     }
@@ -275,7 +280,14 @@ document.addEventListener("keydown", function(event){
             shapeX = gameboundary - shapeWidth;
         }       
     } else if (event.key === "ArrowDown"){
-        shapeY += 15;
+                
+        if (!collisondetection()){
+            shapeY += tilesize;
+        }
+        
+        if (shapeY >= canvas.height + shape[ranshape[1]].length * tilesize){
+            shapeY = canvas.height + shape[ranshape[1]].length * tilesize
+        }
     }   
 });
 
@@ -285,8 +297,7 @@ function drawEveryting(){
     if (!gameover){
         drawshapes();
     }    
-    drawEkstraSpace();
-    
+    drawEkstraSpace();    
 }
 function gameloop(){
     
