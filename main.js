@@ -1,4 +1,3 @@
-
 const canvas = document.getElementById("tetricity");
 const ctx = canvas.getContext("2d");
 
@@ -65,6 +64,8 @@ background.src = "background.png"
 // tetrisimage.src = "tetris.png";
 
 
+
+
 function backGround(){
     ctx.drawImage (background, -5, 0, 300, 488);
 }
@@ -127,25 +128,27 @@ function dealingText (coloroffont, fontsize, text, locx, locy){
     ctx.strokeText(text, locx, locy);
 }
 
-function drawshapes() {          
+function drawshapes() {   
     
-        for (let i = 0; i < shape[ranshape[1]].length; i++) {
-            for (let j = 0; j < shape[ranshape[1]][i].length; j++) {
-                if (shape[ranshape[1]][i][j] == 1) { 
-
-                    ctx.fillStyle = color[ranshape[1]]             
-                    ctx.fillRect(shapeX + j * tilesize, shapeY + i * tilesize, tilesize, tilesize);
-                    
-                    ctx.fillStyle = "rgba(255,255,255,0.9)"; // half- transparent
-                    ctx.fillRect(shapeX + j * tilesize, shapeY + i * tilesize, tilesize, tilesize / 4);
-                    
-                    ctx.strokeStyle = color.frame;
-                    ctx.lineWidth = framegap;
-                    ctx.strokeRect(shapeX + j * tilesize, shapeY + i * tilesize, tilesize, tilesize);
-                }
+    let ghostPosY = getGhostPosition();
+    console.log (ghostPosY)
+    
+    for (let i = 0; i < shape[ranshape[1]].length; i++) {
+        for (let j = 0; j < shape[ranshape[1]][i].length; j++) {
+            if (shape[ranshape[1]][i][j] == 1) {
+                
+                drawGhost(shapeX + j * tilesize, ghostPosY + i * tilesize);
+                ctx.fillStyle = color[ranshape[1]];             
+                ctx.fillRect(shapeX + j * tilesize, shapeY + i * tilesize, tilesize, tilesize);
+                ctx.fillStyle = "rgba(255,255,255,0.9)"; // half-transparent
+                ctx.fillRect(shapeX + j * tilesize, shapeY + i * tilesize, tilesize, tilesize / 4);
+                ctx.strokeStyle = color.frame;
+                ctx.lineWidth = framegap;
+                ctx.strokeRect(shapeX + j * tilesize, shapeY + i * tilesize, tilesize, tilesize);
             }
-        }       
-};
+        }
+    }       
+}
 
 function drawEkstraSpace (){
 
@@ -172,7 +175,7 @@ function drawEkstraSpace (){
                 ctx.fillStyle = color[ranshape[0]]             
                 ctx.fillRect(235 + j * tilesize, 92 + i * tilesize  , tilesize, tilesize);
                 
-                ctx.fillStyle = "rgba(255,255,255,0.9)";
+                ctx.fillStyle = "rgba(255,255,255,0.6)";
                 ctx.fillRect(235 + j * tilesize, 92 + i * tilesize  , tilesize, tilesize / 4);
                                 
                 ctx.strokeStyle = color.frame;
@@ -182,6 +185,43 @@ function drawEkstraSpace (){
         }
     }
     //dealingText(color[ranshape[0]], 18, "Next Shape", extraspace, 280)
+}
+
+function drawGhost (x, y){
+    if (y < row * tilesize) { // Ensure ghost is within the grid
+        ctx.globalAlpha = 0.3;
+        ctx.fillStyle = "white";
+        ctx.fillRect (x, y, tilesize, tilesize);
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = framegap;
+        ctx.strokeRect(x , y , tilesize, tilesize);
+        ctx.globalAlpha = 1;
+
+    }
+}
+
+function getGhostPosition () {
+    let ghostY = shapeY;
+    while (!collisionGhostDetection(ghostY + tilesize)) {
+        ghostY += tilesize;
+    }
+    return ghostY; // Adjust to stop at the correct position
+}
+
+function collisionGhostDetection(y) {
+    for (let i = 0; i < shape[ranshape[1]].length; i++) {
+        for (let j = 0; j < shape[ranshape[1]][i].length; j++) {
+            if (shape[ranshape[1]][i][j] === 1) {
+                let newY = Math.floor(y / tilesize) + i;
+                let newX = Math.floor(shapeX / tilesize) + j;
+                if (newY >= row || grid[newY][newX] !== 0) {
+                    return true;
+                    
+                }
+            }
+        }
+    }
+    return false;
 }
 
 function getRandomShape (){
@@ -308,9 +348,6 @@ function gameloop(){
 gameloop();
 
 
-
-
-
 // todo creat general concept of the game (canvas id, getcontext, etc) - done
 // todo create draft for game- first drawing shapes, board and background then updating the shapes and board and countiously drawing them - done
 // completing drawing board with black background - done
@@ -337,6 +374,8 @@ gameloop();
 // make the code much simplier - in progress
 // game entry screen and choose levels - in progress
 // visual effects on "gameover"
+// restart button
+// ghost shape
 
 // issue/bug : when arrowdown to the end, game loop paused and shape out of board -resolved by adjusting vertical speed to tilesize 
 // issue/bug : side collision detection should be added to code.
