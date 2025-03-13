@@ -63,6 +63,8 @@ background.src = "background.png"
 // brickimage.src = "wall.png";
 // tetrisimage.src = "tetris.png";
 
+//ghost constant
+ghostconst = getGhostPosition() 
 
 
 
@@ -128,16 +130,12 @@ function dealingText (coloroffont, fontsize, text, locx, locy){
     ctx.strokeText(text, locx, locy);
 }
 
-function drawshapes() {   
-    
-    let ghostPosY = getGhostPosition();
-    console.log (ghostPosY)
-    
+function drawshapes() {    
+    //ghostPosY = getGhostPosition()
     for (let i = 0; i < shape[ranshape[1]].length; i++) {
         for (let j = 0; j < shape[ranshape[1]][i].length; j++) {
             if (shape[ranshape[1]][i][j] == 1) {
-                
-                drawGhost(shapeX + j * tilesize, ghostPosY + i * tilesize);
+                //drawGhost(shapeX + j * tilesize, ghostPosY + i * tilesize);
                 ctx.fillStyle = color[ranshape[1]];             
                 ctx.fillRect(shapeX + j * tilesize, shapeY + i * tilesize, tilesize, tilesize);
                 ctx.fillStyle = "rgba(255,255,255,0.9)"; // half-transparent
@@ -187,34 +185,47 @@ function drawEkstraSpace (){
     //dealingText(color[ranshape[0]], 18, "Next Shape", extraspace, 280)
 }
 
-function drawGhost (x, y){
-    if (y < row * tilesize) { // Ensure ghost is within the grid
-        ctx.globalAlpha = 0.3;
-        ctx.fillStyle = "white";
-        ctx.fillRect (x, y, tilesize, tilesize);
-        ctx.strokeStyle = "black";
-        ctx.lineWidth = framegap;
-        ctx.strokeRect(x , y , tilesize, tilesize);
-        ctx.globalAlpha = 1;
+function drawGhost (){   
 
-    }
-}
+    ghostPosY = getGhostPosition();
+    //cnsole.log(ghostPosY);
+    for (let i = 0; i < shape[ranshape[1]].length; i++) {
+        for (let j = 0; j < shape[ranshape[1]][i].length; j++) {
+            if (shape[ranshape[1]][i][j] == 1) {              
+           
+                ctx.globalAlpha = 0.15;
+                ctx.fillStyle = "white";
+                ctx.fillRect (shapeX + j * tilesize, ghostPosY + i * tilesize, tilesize, tilesize);
+                ctx.strokeStyle = "white";
+                ctx.lineWidth = framegap;
+                ctx.strokeRect(shapeX + j * tilesize, ghostPosY + i * tilesize, tilesize, tilesize);
+                ctx.globalAlpha = 1;        
+            }
+        }
+     }
+ }
 
 function getGhostPosition () {
-    let ghostY = shapeY;
-    while (!collisionGhostDetection(ghostY + tilesize)) {
+          
+    let ghostY = 45;        
+    while (!collisionGhostDetection(ghostY)) {
         ghostY += tilesize;
     }
-    return ghostY; // Adjust to stop at the correct position
+    console.log (ghostY)
+    return ghostY; 
+
 }
+
+ // Adjust to stop at the correct position
 
 function collisionGhostDetection(y) {
     for (let i = 0; i < shape[ranshape[1]].length; i++) {
         for (let j = 0; j < shape[ranshape[1]][i].length; j++) {
             if (shape[ranshape[1]][i][j] === 1) {
-                let newY = Math.floor(y / tilesize) + i;
+                let newY = Math.floor(y / tilesize) + i + 1;
                 let newX = Math.floor(shapeX / tilesize) + j;
                 if (newY >= row || grid[newY][newX] !== 0) {
+                    
                     return true;
                     
                 }
@@ -290,17 +301,14 @@ function clearFullRows() {
 }
 
 function moveshapes(){
-
     if (!collisondetection()){
         shapeY += velshapeY;                    
-           
     } else if ( shapeY <= 50) {
-        gameover = true        
-
+        gameover = true;
     } else {
         Placetheshape(Math.floor(shapeX / tilesize), Math.floor(shapeY / tilesize));
         shapeY = 45;
-        ranshape.pop()
+        ranshape.pop();
         ranshape.unshift(getRandomShape());
         shapeX = Math.floor(gameboundary / 2 - tilesize);
     }
@@ -336,6 +344,7 @@ function drawEveryting(){
     drawboard()
     if (!gameover){
         drawshapes();
+        drawGhost()
     }    
     drawEkstraSpace();    
 }
