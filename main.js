@@ -4,6 +4,7 @@ const ctx = canvas.getContext("2d");
 let gameover = false;
 const tilesize = 15;
 let velshapeY = 1;
+const statingPosY = 45;
 const row = 30;
 const col = 14;
 const col2 = 10;
@@ -48,7 +49,7 @@ TT : "#FE9900",
 };
 
 let shapeX = gameboundary / 2;
-let shapeY = 45;
+let shapeY = statingPosY;
 let gamescore = 0;
 let target_score = 40;
 
@@ -61,12 +62,7 @@ let gameLevel = 1;
 let background = new Image();
 background.src = "background.png"
 // brickimage.src = "wall.png";
-// tetrisimage.src = "tetris.png";
-
-//ghost constant
-ghostconst = getGhostPosition() 
-
-
+// tetrisimage.src = "tetris.png"
 
 function backGround(){
     ctx.drawImage (background, -5, 0, 300, 488);
@@ -207,7 +203,7 @@ function drawGhost (){
 
 function getGhostPosition () {
           
-    let ghostY = 45;        
+    let ghostY = statingPosY;        
     while (!collisionGhostDetection(ghostY)) {
         ghostY += tilesize;
     }
@@ -307,7 +303,7 @@ function moveshapes(){
         gameover = true;
     } else {
         Placetheshape(Math.floor(shapeX / tilesize), Math.floor(shapeY / tilesize));
-        shapeY = 45;
+        shapeY = statingPosY;
         ranshape.pop();
         ranshape.unshift(getRandomShape());
         shapeX = Math.floor(gameboundary / 2 - tilesize);
