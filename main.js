@@ -1,6 +1,6 @@
 const canvas = document.getElementById("tetricity");
 const ctx = canvas.getContext("2d");
-
+let gamestart = false;
 let gameover = false;
 const tilesize = 15;
 let velshapeY = 1;
@@ -59,10 +59,14 @@ let gameLevel = 1;
 // image files
 // let brickimage = new Image();
 // let tetrisimage = new Image();
+let titlePage = new Image();
 let background = new Image();
-background.src = "background.png"
+background.src = "background.png";
+titlePage.src = "title_page.png";
 // brickimage.src = "wall.png";
 // tetrisimage.src = "tetris.png"
+
+const startbutton = {x: 60, y: 283, width : 90, height : 60}
 
 function backGround(){
     ctx.drawImage (background, -5, 0, 300, 488);
@@ -124,6 +128,15 @@ function dealingText (coloroffont, fontsize, text, locx, locy){
     ctx.lineWidth = 2;
     ctx.strokeStyle = coloroffont;  
     ctx.strokeText(text, locx, locy);
+}
+
+function drawTitlePage () {
+
+    ctx.drawImage(titlePage, 2, 40, 300, 370);
+    ctx.strokeStyle = color.frame;
+    ctx.lineWidth = 9;
+    ctx.strokeRect(0, 35, 300, 380)
+    
 }
 
 function drawshapes() {    
@@ -297,17 +310,22 @@ function clearFullRows() {
 }
 
 function moveshapes(){
-    if (!collisondetection()){
-        shapeY += velshapeY;                    
-    } else if ( shapeY <= 50) {
-        gameover = true;
+
+    if (gamestart){        
+        if (!collisondetection()){
+            shapeY += velshapeY;                    
+        } else if ( shapeY <= 50) {
+            gameover = true;
+        } else {
+            Placetheshape(Math.floor(shapeX / tilesize), Math.floor(shapeY / tilesize));
+            shapeY = statingPosY;
+            ranshape.pop();
+            ranshape.unshift(getRandomShape());
+            shapeX = Math.floor(gameboundary / 2 - tilesize);
+        }
     } else {
-        Placetheshape(Math.floor(shapeX / tilesize), Math.floor(shapeY / tilesize));
-        shapeY = statingPosY;
-        ranshape.pop();
-        ranshape.unshift(getRandomShape());
-        shapeX = Math.floor(gameboundary / 2 - tilesize);
-    }
+        return
+    }  
 }
 
 document.addEventListener("keydown", function(event){
@@ -335,19 +353,43 @@ document.addEventListener("keydown", function(event){
     }   
 });
 
-function drawEveryting(){   
+canvas.addEventListener("click", function (event) {
+
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = event.clientX - rect.left;
+    const mouseY = event.clientY - rect.top;
+
+    console.log(mouseX, mouseY);
     
-    drawboard()
-    if (!gameover){
-        drawshapes();
-        drawGhost()
-    }    
-    drawEkstraSpace();    
+
+    if (
+        mouseX >= startbutton.x &&
+        mouseX <= startbutton.x + startbutton.width &&
+        mouseY >= startbutton.y &&
+        mouseY <= startbutton.y + startbutton.height
+    ) {
+        gamestart = true;        
+    }  
+})
+
+function drawEveryting(){
+    if (!gamestart){
+        drawTitlePage();
+    } else {        
+        drawboard()    
+        if (!gameover){
+            drawshapes();
+            drawGhost();
+        }    
+        drawEkstraSpace();
+    }          
 }
+
 function gameloop(){
     
     drawEveryting();
-    moveshapes();
+    moveshapes();   
+    
     requestAnimationFrame(gameloop);
 }
 gameloop();
