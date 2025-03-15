@@ -10,11 +10,12 @@ To run this project on your computer, follow these steps:
    ```bash
    git clone https://github.com/kundup/tetricity.git
 
-2.Open the project in a browser:
-Go to the project folder and open the index.html file directly in your browser to play the game.
-You can open the index.html file by double-clicking on it or right-clicking and selecting "Open with" to choose your browser.
+2. Open the project in a browser:
+   
+   Go to the project folder and open the index.html file directly in your browser to play the game.
+   You can open the index.html file by double-clicking on it or right-clicking and selecting "Open with" to choose your browser.
 
-### 3. How to Play**
+### 3. How to Play
 
 Use the arrow keys to move the blocks.
 The goal is to place the blocks neatly and clear rows.
