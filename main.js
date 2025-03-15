@@ -1,7 +1,11 @@
 const canvas = document.getElementById("tetricity");
 const ctx = canvas.getContext("2d");
+
+// game status
 let gamestart = false;
 let gameover = false;
+const startbutton = {x: 60, y: 283, width : 90, height : 60};
+
 const tilesize = 15;
 let velshapeY = 1;
 const statingPosY = 45;
@@ -29,8 +33,6 @@ TT : [[0,1,0],[1,1,1]],
 const Keylists = Object.keys(shape);
 let ranshape = [getRandomShape(), getRandomShape()]
 //let ranshape_old = Keylists.at(-1); // ** last element in the array
-
-
 const color = {
 backgroundcolor : "black",
 frame : "black",
@@ -66,7 +68,7 @@ titlePage.src = "title_page.png";
 // brickimage.src = "wall.png";
 // tetrisimage.src = "tetris.png"
 
-const startbutton = {x: 60, y: 283, width : 90, height : 60}
+
 
 function backGround(){
     ctx.drawImage (background, -5, 0, 300, 488);
@@ -194,55 +196,6 @@ function drawEkstraSpace (){
     //dealingText(color[ranshape[0]], 18, "Next Shape", extraspace, 280)
 }
 
-function drawGhost (){   
-
-    ghostPosY = getGhostPosition();
-    //cnsole.log(ghostPosY);
-    for (let i = 0; i < shape[ranshape[1]].length; i++) {
-        for (let j = 0; j < shape[ranshape[1]][i].length; j++) {
-            if (shape[ranshape[1]][i][j] == 1) {              
-           
-                ctx.globalAlpha = 0.15;
-                ctx.fillStyle = "white";
-                ctx.fillRect (shapeX + j * tilesize, ghostPosY + i * tilesize, tilesize, tilesize);
-                ctx.strokeStyle = "white";
-                ctx.lineWidth = framegap;
-                ctx.strokeRect(shapeX + j * tilesize, ghostPosY + i * tilesize, tilesize, tilesize);
-                ctx.globalAlpha = 1;        
-            }
-        }
-     }
- }
-
-function getGhostPosition () {
-          
-    let ghostY = statingPosY;        
-    while (!collisionGhostDetection(ghostY)) {
-        ghostY += tilesize;
-    }
-    console.log (ghostY)
-    return ghostY; 
-
-}
-
- // Adjust to stop at the correct position
-
-function collisionGhostDetection(y) {
-    for (let i = 0; i < shape[ranshape[1]].length; i++) {
-        for (let j = 0; j < shape[ranshape[1]][i].length; j++) {
-            if (shape[ranshape[1]][i][j] === 1) {
-                let newY = Math.floor(y / tilesize) + i + 1;
-                let newX = Math.floor(shapeX / tilesize) + j;
-                if (newY >= row || grid[newY][newX] !== 0) {
-                    
-                    return true;
-                    
-                }
-            }
-        }
-    }
-    return false;
-}
 
 function getRandomShape (){
 
