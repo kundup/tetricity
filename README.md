@@ -36,10 +36,14 @@ If you'd like to contribute to this project, you can follow these steps:
 4. Open a pull request to submit your changes.
 
 ###  Thank You for Contributing
-Thanks to everyone who has helped develop this project! If you'd like to support the project, feel free to [donate here] (https://paypal.me/ihsanktu?country.x=CA&locale.x=en_US) or be sponsor for me 5$ or more. Your donations will help improve the project further.
 
+If you would like to support the project, you can donate via PayPal:
 
-I appreciate all your contributions! 🧡
+[Donate Here](https://www.paypal.com/donate?hosted_button_id=YOUR_BUTTON_ID)
+
+or be sponsor 
+
+Your support is greatly appreciated! 🧡
 
 ## Licence
 
