@@ -59,29 +59,21 @@ let target_score = 40;
 let gameLevel = 1;
 
 // image files
-// let brickimage = new Image();
-// let tetrisimage = new Image();
 let titlePage = new Image();
 let background = new Image();
 background.src = "background.png";
 titlePage.src = "title_page.png";
-// brickimage.src = "wall.png";
-// tetrisimage.src = "tetris.png"
-
-
 
 function backGround(){
     ctx.drawImage (background, -5, 0, 300, 488);
 }
 
-function drawboard(){     
-    
+function drawboard(){       
     // whole board; including side area
     ctx.fillStyle = color.backgroundcolor;
     ctx.fillRect(0, 0, canvas.width, canvas.height); 
     
     backGround();
-
     //Score texting
     dealingText(color.fontendcolor, 15, gamescore, 270, 61);
     //dealingText("red", 16, "Game Level: " + gameLevel, extraspace, 160);
@@ -89,7 +81,6 @@ function drawboard(){
     if (gameover){
 
         dealingText(color.fontendcolor, 22, "Game Over" , gameboundary * 0.20 , canvas.height / 2);
-
     } else {
         
         for (let i = 0; i < row; i++){
@@ -137,8 +128,7 @@ function drawTitlePage () {
     ctx.drawImage(titlePage, 2, 40, 300, 370);
     ctx.strokeStyle = color.frame;
     ctx.lineWidth = 9;
-    ctx.strokeRect(0, 35, 300, 380)
-    
+    ctx.strokeRect(0, 35, 300, 380);    
 }
 
 function drawshapes() {    
@@ -161,22 +151,6 @@ function drawshapes() {
 
 function drawEkstraSpace (){
 
-    //drawLine(gameboundary, 0, gameboundary, canvas.height, "yellow", 8);
-    //drawLine(gameboundary, canvas.height/2, canvas.width, canvas.height / 2, "#34EEF6", 8)
-    
-    // grid2[14].fill(1); // use a grid to place bricks
-    // grid2 [0].fill(1);
-    // grid2[5].fill(1);
-    // grid2 [grid2.length -3].fill(1);
-    // for (let i = 0; i < row; i++){
-    //     for (let j = 0; j < col2; j++){
-    //         if (grid2[i][j] === 1) {
-    //             let x = j * 16 + gameboundary + 4
-    //             let y = i * 16 
-    //             ctx.drawImage(tetrisimage, x, y, 16, 16)
-    //         }
-    //     }
-    // }
     for (let i = 0; i < shape[ranshape[0]].length; i++) {
         for (let j = 0; j < shape[ranshape[0]][i].length; j++) {
             if (shape[ranshape[0]][i][j] == 1) {
@@ -192,10 +166,8 @@ function drawEkstraSpace (){
                 ctx.strokeRect(235 + j * tilesize, 92 + i * tilesize  , tilesize, tilesize);
             }
         }
-    }
-    //dealingText(color[ranshape[0]], 18, "Next Shape", extraspace, 280)
+    }    
 }
-
 
 function getRandomShape (){
 
@@ -297,51 +269,9 @@ function drawEveryting(){
 function gameloop(){
     
     drawEveryting();
-    moveshapes();   
-    
+    moveshapes();       
     requestAnimationFrame(gameloop);
 }
 gameloop();
 
 
-// todo creat general concept of the game (canvas id, getcontext, etc) - done
-// todo create draft for game- first drawing shapes, board and background then updating the shapes and board and countiously drawing them - done
-// completing drawing board with black background - done
-// todo create shapes and draw them pls - L shape drawn and the others are drawn
-// todo now automate the drawing of shapes - in this case we need to create a function that will draw the shapes one at a time - done
-// lets move the shapes to the center of the board -done
-// lets move the shapes down - done 
-// now boundary check for the shapes -done
-// now after boundry checked from height, let the new type shapes drop -done
-// lets make the shapes move left and right - done
-// todo add boundaries -done 
-// droppping the shapes by arrowdown - done
-// grid drawn as tile map.
-// after keydown event, now going through game mechanics keep the shapes in board and go on new shapes - done.
-// lets play around the former todo, place the shape somewhere around bottom side.. - done
-// lets try to code the collison detection.- done
-// color the shapes - done
-// lets gain some points and break the shape -done
-// end the game -done
-// "n" shape will be added -done
-// write the code again with for loop at clearfullrows function -done
-// points mechanism shown on the board -now canvas width reshaped with extraspace; still in progress (mechanics done)
-// next shape visuals -done
-// make the code much simplier - in progress
-// game entry screen and choose levels - in progress
-// visual effects on "gameover"
-// restart button
-// ghost shape
-
-// issue/bug : when arrowdown to the end, game loop paused and shape out of board -resolved by adjusting vertical speed to tilesize 
-// issue/bug : side collision detection should be added to code.
-
-// for the long term improvement add visual affects and organise the game frame
-// for the long term improvement add possibility
-// publish the game
-// magical box
-
-
-
-
-// ** represents : new js function usage
