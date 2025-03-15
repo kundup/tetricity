@@ -15,7 +15,7 @@ To run this project on your computer, follow these steps:
    Go to the project folder and open the index.html file directly in your browser to play the game.
    You can open the index.html file by double-clicking on it or right-clicking and selecting "Open with" to choose your browser.
 
-3. Copy/Paste the Github Pages web adress and play!
+3. Copy/Paste Github Pages web adress and play!
 
    https://kundup.github.io/tetricity/
 
