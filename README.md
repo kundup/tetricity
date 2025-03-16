@@ -39,7 +39,7 @@ If you'd like to contribute to this project, you can follow these steps:
 
 If you would like to support the project, you can donate via PayPal:
 
-[Donate Here](https://www.paypal.com/donate?hosted_button_id=YOUR_BUTTON_ID)
+[Donate Here](https://paypal.me/ikundup?country.x=CA&locale.x=en_US)
 
 or be sponsor 
 
